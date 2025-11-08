@@ -25,19 +25,55 @@ bot.on('callback_query', async query => {
 	const chatId = query.message?.chat.id
 	if (!chatId) return
 
-	if (query.data === 'get_diploma') {
-		await bot.sendMessage(chatId, 'Введите фамилию, имя и регион спортсмена 📍')
+	switch (query.data) {
+		case 'get_diploma':
+			await bot.sendMessage(
+				chatId,
+				'Введите фамилию, имя и регион спортсмена 📍'
+			)
+			break
+		case 'restart':
+			await bot.sendMessage(chatId, '👋 Хотите получить ещё диплом?', {
+				reply_markup: {
+					inline_keyboard: [
+						[{ text: '🎓 Получить диплом', callback_data: 'get_diploma' }],
+					],
+				},
+			})
+			break
 	}
 })
 
 bot.on('message', async msg => {
 	if (!msg.text || msg.text.startsWith('/')) return
 
-	const athlete = findAthlete(msg.text)
 	const chatId = msg.chat.id
+	const athlete = findAthlete(msg.text)
 
 	if (!athlete) {
-		await bot.sendMessage(chatId, '❌ Спортсмен не найден.')
+		console.log(`[INFO] Спортсмен не найден: ${msg.text}`)
+		await bot.sendMessage(
+			chatId,
+			'❌ Спортсмен не найден.\n\nЕсли вы уверены, что всё указали верно, напишите организаторам:',
+			{
+				reply_markup: {
+					inline_keyboard: [
+						[
+							{
+								text: '📩 Написать организаторам',
+								url: 'https://t.me/eurasia_chat',
+							},
+						],
+						[
+							{
+								text: '🎓 Попробовать снова',
+								callback_data: 'get_diploma',
+							},
+						],
+					],
+				},
+			}
+		)
 		return
 	}
 
@@ -45,6 +81,14 @@ bot.on('message', async msg => {
 	const pdfPath = await generateDiploma(athlete)
 	await bot.sendDocument(chatId, pdfPath)
 	fs.unlinkSync(pdfPath)
+
+	await bot.sendMessage(chatId, '📨 Диплом отправлен!', {
+		reply_markup: {
+			inline_keyboard: [
+				[{ text: '🎓 Получить ещё диплом', callback_data: 'get_diploma' }],
+			],
+		},
+	})
 })
 
 console.log('[BOT] Бот запущен 🚀')
