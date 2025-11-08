@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		/* Compilint */
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"target": "ES2022",
+		"sourceMap": true,
+		"outDir": "dist",
+		"allowJs": false,
+
+		/* Linting */
+		//"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"skipLibCheck": true
+	},
+	"include": ["src/**/*"]
+}

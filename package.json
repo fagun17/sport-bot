@@ -1,0 +1,30 @@
+{
+	"name": "sport-bot",
+	"version": "1.0.0",
+	"description": "sport-bot for generation diplomas",
+	"main": "src/bot.ts",
+	"type": "module",
+	"scripts": {
+		"dev": "ts-node src/bot.ts",
+		"build": "tsc",
+		"start": "yarn build && node dist/bot.js"
+	},
+	"author": "Alex Sapunov",
+	"license": "ISC",
+	"dependencies": {
+		"@pdf-lib/fontkit": "^1.1.1",
+		"dotenv": "^17.2.3",
+		"node-telegram-bot-api": "^0.66.0",
+		"pdf-lib": "^1.17.1",
+		"pdfkit": "^0.17.2",
+		"telegram-bot-api": "^2.0.1",
+		"xlsx": "^0.18.5"
+	},
+	"devDependencies": {
+		"@types/node": "^22.8.1",
+		"@types/node-telegram-bot-api": "^0.64.12",
+		"@types/pdfkit": "^0.17.3",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.6.3"
+	}
+}
