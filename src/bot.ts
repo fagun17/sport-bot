@@ -48,6 +48,10 @@ bot.on('message', async msg => {
 	if (!msg.text || msg.text.startsWith('/')) return
 
 	const chatId = msg.chat.id
+	const username =
+		msg.from?.username || `${msg.from?.first_name} ${msg.from?.last_name || ''}`
+
+	console.log(`[INPUT] User: ${username} (${chatId}) entered: ${msg.text}`)
 	const athlete = findAthlete(msg.text)
 
 	if (!athlete) {
