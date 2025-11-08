@@ -21,10 +21,10 @@ export async function generateDiploma(athlete: {
 	const fontSize = 24
 	const centerX = 250
 
-	const draw = (text: string, y: number) => {
+	const draw = (text: string, y: number, offsetX = 0) => {
 		const width = font.widthOfTextAtSize(text, fontSize)
 		page.drawText(text, {
-			x: centerX - width / 2,
+			x: centerX - width / 2 + offsetX,
 			y,
 			size: fontSize,
 			font,
@@ -34,7 +34,7 @@ export async function generateDiploma(athlete: {
 
 	draw(athlete.Фамилия, height - 310)
 	draw(athlete.Имя, height - 360)
-	draw(athlete.Регион, height - 489)
+	draw(athlete.Регион, height - 489, 6)
 
 	fs.writeFileSync(outPath, await pdfDoc.save())
 	return outPath
