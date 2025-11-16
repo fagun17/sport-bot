@@ -45,6 +45,10 @@ bot.on('callback_query', async query => {
 })
 
 bot.on('message', async msg => {
+	if ((msg as any).via_bot) return
+
+	if (msg.reply_to_message) return
+	if (msg.edit_date) return
 	if (!msg.text || msg.text.startsWith('/')) return
 
 	const chatId = msg.chat.id
